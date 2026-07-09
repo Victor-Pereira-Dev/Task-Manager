@@ -1,0 +1,55 @@
+﻿body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 5px;
+    width: 700px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+}
+
+.body input {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    width: 260px;
+    transition: border-color 0.2s ease;
+}
+
+.body input:focus {
+    outline: none;
+    border-color: #6c63ff; 
+}
+
+.enter {
+    margin-top: 20px;
+}
+
+#enter-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+#enter-btn:hover {
+    background: #574fd6;
+}
+
+#enter-btn:active {
+    transform: scale(0.97);
+}

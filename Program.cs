@@ -24,7 +24,7 @@ app.UseDefaultFiles(new DefaultFilesOptions
     FileProvider = new PhysicalFileProvider(
         Path.Combine(builder.Environment.ContentRootPath, "Frontend")
     ),
-    DefaultFileNames = new List<string> { "index/index.html" } 
+    DefaultFileNames = new List<string> { "login/login.html" } 
 });
 
 app.UseStaticFiles(new StaticFileOptions
