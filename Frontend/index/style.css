@@ -51,19 +51,42 @@
     background-color: #F5F6F8;
     height: 400px;
     width: 350px;
+    overflow-y: auto;
 }
 
 .kanban h1 {
-    font-size: 16px;
+    font-size: 13px;
     color: darkslategray;
-    margin-left: 8px;
-    font-weight: bold;
+    margin: 0 0 16px 8px;
+    padding-top: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #E2E8F0;
 }
+
+.kanban h1::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.backlog h1::before { background-color: #94A3B8; }
+.development h1::before { background-color: #3B82F6; }
+.progress h1::before { background-color: #F59E0B; }
+.done h1::before { background-color: #22C55E; }
 
 .development {
     background-color: #F5F6F8;
     height: 400px;
     width: 350px;
+    overflow-y: auto;
 }
 
 
@@ -71,12 +94,14 @@
     background-color: #F5F6F8;
     height: 400px;
     width: 350px;
+    overflow-y: auto;
 }
 
 .done {
     background-color: #F5F6F8;
     height: 400px;
     width: 350px;
+    overflow-y: auto;
 }
 
 
@@ -196,3 +221,15 @@
     margin-top: auto;
     transform: translateY(-30px);
 }
+
+.footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+    padding: 20px;
+    border-top: 2px solid lightgray;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-weight: bolder;
+}
+
+
