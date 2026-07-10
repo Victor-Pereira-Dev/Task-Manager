@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1e 100%);
 }
 
 .body {
@@ -13,9 +14,10 @@
     height: 100vh;
     gap: 5px;
     width: 700px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    font-family: 'Inter', sans-serif;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
 }
 
 .body input {
@@ -24,11 +26,22 @@
     padding: 10px 12px;
     width: 260px;
     transition: border-color 0.2s ease;
+    color: #999;
 }
 
 .body input:focus {
     outline: none;
     border-color: #6c63ff; 
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+.body input::placeholder {
+    transition: transform 0.2s ease;
+    transform-origin: left center;
+}
+
+.body input:focus::placeholder {
+    transform: scale(0.5);
 }
 
 .enter {
@@ -42,14 +55,36 @@
     background: #333;
     color: white;
     font-weight: 600;
-    cursor: pointer;
     transition: background 0.2s ease, transform 0.1s ease;
 }
 
+#enter-btn span {
+    background: linear-gradient(90deg, lightblue 0%, lightblue 50%, white 50%, white 100%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: background-position 0.3s ease-in-out;
+}
+
 #enter-btn:hover {
-    background: #574fd6;
+    transform: scale(1.15);
+}
+
+#enter-btn:hover span {
+    background-position: 0% 0;
 }
 
 #enter-btn:active {
     transform: scale(0.97);
+}
+
+#Logo {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: -0.5px;
+    color: #333;
+    margin-bottom: 10px;
 }
