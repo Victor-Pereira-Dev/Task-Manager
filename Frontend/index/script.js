@@ -1,6 +1,9 @@
 ﻿const botaoGrid = document.getElementById('grid-btn');
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
+const botaoSair = document.getElementById('sair');
+const botaoBoard = document.getElementById('board');
+const botaoProjetos = document.getElementById('projects');
 
 //Parte do Grid
 botaoGrid.addEventListener('click', () => {
@@ -9,6 +12,19 @@ botaoGrid.addEventListener('click', () => {
 
 botaoFechar.addEventListener('click', () => {
     grid.classList.remove('ativo');
+});
+
+botaoSair.addEventListener('click', () => {
+    window.location.href = "/login/login.html";
+    //TODO: resetar a sessão antes de enviar pra essa tela.
+});
+
+botaoBoard.addEventListener('click', () => {
+    window.location.href = "/index/index.html";
+});
+
+botaoProjetos.addEventListener('click', () => {
+    window.location.href = "/projetos/projetos.html";
 });
 
 //Parte da requisição para criar o card (Será utilizada pelo criar do modal).

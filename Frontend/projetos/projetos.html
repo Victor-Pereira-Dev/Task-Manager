@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="/projetos/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="/projetos/script.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <div class="menu-btn">
+            <button id="grid-btn">&#9776;</button>
+        </div>
+        <div id="meu-grid" class="grid-lateral">
+            <div class="topo">
+                <div class="menu-btn-fechar">
+                    <button id="grid-btn-fechar">&#9776;</button>
+                </div>
+                <a href="#" class="item" id="board">
+                    <span class="material-icons-outlined">check_box</span>
+                    <span>Quadros</span>
+                </a>
+                <a href="#" class="item" id="projects">
+                    <span class="material-icons-outlined">folder</span>
+                    <span>Projetos</span>
+                </a>
+            </div>
+            <a href="#" class="item" id="sair">
+                <span class="material-icons-outlined">login</span>
+                <span>Sair</span>
+            </a>
+        </div>
+        <div class="title">
+            <h1>Task Manager</h1>
+            <h3>Made by Victor Pereira</h3>
+        </div>
+    </div>
+    <div class="content">
+        <div class="projetos-header">
+            <div class="titulo-secao">
+                <h2>Projetos</h2>
+                <p>Escolha um projeto para entrar no board</p>
+            </div>
+            <button id="criarProjeto"><span>Novo Projeto</span></button>
+        </div>
+
+        <div class="projetos-grid">
+
+            <div class="projeto-card">
+                <div class="projeto-card-topo">
+                    <div>
+                        <p class="projeto-nome">Redesign do App Mobile</p>
+                        <p class="projeto-descricao">Atualização visual e de UX do aplicativo de vendas</p>
+                    </div>
+                    <span class="projeto-status ativo">Ativo</span>
+                </div>
+
+                <div class="projeto-barra-fundo">
+                    <div class="projeto-barra-preenchida" style="width: 62%;"></div>
+                </div>
+
+                <div class="projeto-colunas">
+                    <span class="projeto-coluna-pill backlog">4</span>
+                    <span class="projeto-coluna-pill development">3</span>
+                    <span class="projeto-coluna-pill progress">1</span>
+                    <span class="projeto-coluna-pill done">6</span>
+                </div>
+
+                <div class="projeto-rodape">
+                    <span>Atualizado há 2h</span>
+                    <div class="projeto-membros">
+                        <div class="projeto-avatar">VP</div>
+                        <div class="projeto-avatar">JS</div>
+                        <div class="projeto-avatar">+3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projeto-card">
+                <div class="projeto-card-topo">
+                    <div>
+                        <p class="projeto-nome">Migração para API v2</p>
+                        <p class="projeto-descricao">Substituição gradual dos endpoints legados</p>
+                    </div>
+                    <span class="projeto-status ativo">Ativo</span>
+                </div>
+
+                <div class="projeto-barra-fundo">
+                    <div class="projeto-barra-preenchida" style="width: 28%;"></div>
+                </div>
+
+                <div class="projeto-colunas">
+                    <span class="projeto-coluna-pill backlog">9</span>
+                    <span class="projeto-coluna-pill development">2</span>
+                    <span class="projeto-coluna-pill progress">0</span>
+                    <span class="projeto-coluna-pill done">3</span>
+                </div>
+
+                <div class="projeto-rodape">
+                    <span>Atualizado há 1 dia</span>
+                    <div class="projeto-membros">
+                        <div class="projeto-avatar">VP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projeto-card">
+                <div class="projeto-card-topo">
+                    <div>
+                        <p class="projeto-nome">Onboarding de clientes</p>
+                        <p class="projeto-descricao">Fluxo guiado para novos usuários da plataforma</p>
+                    </div>
+                    <span class="projeto-status pausado">Pausado</span>
+                </div>
+
+                <div class="projeto-barra-fundo">
+                    <div class="projeto-barra-preenchida" style="width: 45%;"></div>
+                </div>
+
+                <div class="projeto-colunas">
+                    <span class="projeto-coluna-pill backlog">2</span>
+                    <span class="projeto-coluna-pill development">1</span>
+                    <span class="projeto-coluna-pill progress">1</span>
+                    <span class="projeto-coluna-pill done">4</span>
+                </div>
+
+                <div class="projeto-rodape">
+                    <span>Atualizado há 5 dias</span>
+                    <div class="projeto-membros">
+                        <div class="projeto-avatar">JS</div>
+                        <div class="projeto-avatar">MP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projeto-card">
+                <div class="projeto-card-topo">
+                    <div>
+                        <p class="projeto-nome">Landing page institucional</p>
+                        <p class="projeto-descricao">Site de apresentação da empresa</p>
+                    </div>
+                    <span class="projeto-status concluido">Concluído</span>
+                </div>
+
+                <div class="projeto-barra-fundo">
+                    <div class="projeto-barra-preenchida" style="width: 100%;"></div>
+                </div>
+
+                <div class="projeto-colunas">
+                    <span class="projeto-coluna-pill backlog">0</span>
+                    <span class="projeto-coluna-pill development">0</span>
+                    <span class="projeto-coluna-pill progress">0</span>
+                    <span class="projeto-coluna-pill done">12</span>
+                </div>
+
+                <div class="projeto-rodape">
+                    <span>Atualizado há 3 semanas</span>
+                    <div class="projeto-membros">
+                        <div class="projeto-avatar">VP</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlayProjeto">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Novo projeto</h3>
+                <button class="modal-close" id="modalCloseProjeto">&times;</button>
+            </div>
+
+            <form id="formProjeto">
+                <div class="modal-body">
+                    <div class="field">
+                        <label for="nomeProjeto">Nome do projeto *</label>
+                        <input type="text" id="nomeProjeto" placeholder="Ex: Redesign do App Mobile" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="descricaoProjeto">Descrição</label>
+                        <textarea id="descricaoProjeto" placeholder="Do que se trata esse projeto..."></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="field">
+                            <label for="statusProjeto">Status</label>
+                            <select id="statusProjeto">
+                                <option value="ativo" selected>Ativo</option>
+                                <option value="pausado">Pausado</option>
+                                <option value="concluido">Concluído</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="membrosProjeto">Membros</label>
+                            <input type="text" id="membrosProjeto" placeholder="Ex: VP, JS, MP">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarProjeto">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>© <a href="https://www.linkedin.com/in/victor-hugo-flores-pereira-84831a274/">Victor Pereira</a></div>
+    </div>
+</body>
+</html>
