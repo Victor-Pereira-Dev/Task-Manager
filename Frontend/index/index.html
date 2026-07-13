@@ -21,7 +21,6 @@
                     <span class="material-icons-outlined">check_box</span>
                     <span>Quadros</span>
                 </a>
-
                 <a href="#" class="item">
                     <span class="material-icons-outlined">folder</span>
                     <span>Projetos</span>
@@ -38,7 +37,10 @@
         </div>
     </div>
     <div class="content">
-        <h2>Kanban Board</h2>
+        <div class="headerBoard">
+            <h2>Kanban Board</h2>
+            <button id="criarCard"><span>+ Novo Ticket</span></button>
+        </div>
         <div class="kanban">
             <div class="backlog">
                 <h1>BACKLOG</h1>
@@ -52,6 +54,66 @@
             <div class="done">
                 <h1>DONE</h1>
             </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Criar Ticket</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <form id="formTicket">
+                <div class="modal-body">
+                    <div class="field type-badge">
+                        <label style="margin:0;">Tipo</label>
+                        <select id="tipo">
+                            <option value="task">Tarefa</option>
+                            <option value="bug">Bug</option>
+                            <option value="story">História</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="titulo">Título *</label>
+                        <input type="text" id="titulo" placeholder="Ex: Ajustar layout do header" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" placeholder="Detalhe o que precisa ser feito..." required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="field">
+                            <label for="coluna">Coluna</label>
+                            <select id="coluna">
+                                <option value="backlog">Backlog</option>
+                                <option value="development">Development</option>
+                                <option value="progress">Progress</option>
+                                <option value="done">Done</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="prioridade">Prioridade</label>
+                            <select id="prioridade">
+                                <option>Baixa</option>
+                                <option selected>Média</option>
+                                <option>Alta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="responsavel">Responsável</label>
+                        <input type="text" id="responsavel" placeholder="Nome do responsável" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="footer">

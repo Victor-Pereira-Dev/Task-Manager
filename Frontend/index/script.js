@@ -1,11 +1,86 @@
-﻿const botao = document.getElementById('grid-btn');
+﻿const botaoGrid = document.getElementById('grid-btn');
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 
-botao.addEventListener('click', () => {
+//Parte do Grid
+botaoGrid.addEventListener('click', () => {
     grid.classList.toggle('ativo');
 });
 
 botaoFechar.addEventListener('click', () => {
     grid.classList.remove('ativo');
+});
+
+//Parte da requisição para criar o card (Será utilizada pelo criar do modal).
+async function criarCard() {
+    try {
+        const response = await fetch("/WeatherForecast");
+
+        if (!response.ok)
+            throw new Error("Erro ao buscar tarefas");
+
+        const tarefas = await response.json();
+
+        console.log(tarefas);
+    }
+    catch (erro) {
+        console.error(erro);
+    }
+}
+
+//Parte do Modal
+const overlay = document.getElementById('modalOverlay');
+const btnAbrir = document.getElementById('criarCard');
+const btnFechar = document.getElementById('modalClose');
+const btnCancel = document.getElementById('btnCancelar');
+const form = document.getElementById('formTicket');
+
+function abrirModal() {
+    overlay.classList.add('ativo');
+    document.getElementById('titulo').focus();
+}
+
+function fecharModal() {
+    overlay.classList.remove('ativo');
+    form.reset();
+}
+
+btnAbrir.addEventListener('click', abrirModal);
+btnFechar.addEventListener('click', fecharModal);
+btnCancel.addEventListener('click', fecharModal);
+
+overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) fecharModal();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('ativo')) fecharModal();
+});
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const titulo = document.getElementById('titulo').value.trim();
+    const desc = document.getElementById('descricao').value.trim();
+    const tipo = document.getElementById('tipo').value;
+    const coluna = document.getElementById('coluna').value;
+    const prioridade = document.getElementById('prioridade').value;
+    const responsavel = document.getElementById('responsavel').value.trim();
+
+    if (!titulo || !desc || !responsavel) return;
+  
+    criarCard();
+
+    //estrutura da Card criada apenas para teste por enquanto no front, depois irei implementar o metodo de chamada de volta que trará os dados e preencherá as colunas
+    //com o que foi criado. (ou talvez deixe assim e so chame no Get da pagina, quem sabe)
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="card-title">${titulo}</div>
+        <span class="card-tag">${tipo}</span>
+        <div class="card-meta">${prioridade}${responsavel ? ' • ' + responsavel : ''}</div>
+    `;
+
+    document.querySelector('.' + coluna).appendChild(card);
+    fecharModal();
 });
