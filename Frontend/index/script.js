@@ -30,7 +30,7 @@ botaoProjetos.addEventListener('click', () => {
 //Parte da requisição para criar o card (Será utilizada pelo criar do modal).
 async function criarCard() {
     try {
-        const response = await fetch("/WeatherForecast");
+        const response = await fetch("/Projeto");
 
         if (!response.ok)
             throw new Error("Erro ao buscar tarefas");

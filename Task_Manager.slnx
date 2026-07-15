@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../TaskManager.Infrastructure/Task_Manager.Infrastructure.csproj" Id="8f6be787-d5bd-4b34-b8ca-875efaf5d374" />
   <Project Path="../Task_Manager.Application/Task_Manager.Application.csproj" Id="b730cf80-0668-4355-981d-0cede3afbdfc" />
   <Project Path="Task_Manager.API.csproj" />
 </Solution>
