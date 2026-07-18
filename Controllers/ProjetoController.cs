@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Task_Manager.Application.Interfaces;
+using Task_Manager.Application.Interfaces.Projeto;
 
 namespace Task_Manager.Controllers
 {

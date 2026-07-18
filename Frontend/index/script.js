@@ -28,16 +28,35 @@ botaoProjetos.addEventListener('click', () => {
 });
 
 //Parte da requisição para criar o card (Será utilizada pelo criar do modal).
-async function criarCard() {
+async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, responsavel, usuario) {
     try {
-        const response = await fetch("/Projeto");
+        const response = await fetch("/Ticket", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                proId: proId,
+                titulo: titulo,
+                descricao: descricao,
+                tipo: tipo,
+                coluna: coluna,
+                prioridade: prioridade,
+                responsavel: responsavel,
+                usuario: usuario
+            })
+        });
 
-        if (!response.ok)
-            throw new Error("Erro ao buscar tarefas");
+        if (!response.ok) {
+            const erro = await response.text();
+            console.log(response.status);
+            console.log(erro);
+            throw new Error("Erro ao criar tarefa.");
+        }
 
-        const tarefas = await response.json();
+        const ticket = await response.json();
 
-        console.log(tarefas);
+        console.log(ticket);
     }
     catch (erro) {
         console.error(erro);
@@ -84,8 +103,9 @@ form.addEventListener('submit', (e) => {
     const responsavel = document.getElementById('responsavel').value.trim();
 
     if (!titulo || !desc || !responsavel) return;
-  
-    criarCard();
+
+    //esse cara, irei substituir provavelmente com um session que pegara na sessão o id do projeto e do usuário que tá criando.
+    criarCard("1B86B063-BC48-4D5E-A307-7AC273D40431", titulo, desc, tipo, coluna, prioridade, responsavel, "86F25DDF-9DF7-4795-A88B-D223283C55E4")
 
     //estrutura da Card criada apenas para teste por enquanto no front, depois irei implementar o metodo de chamada de volta que trará os dados e preencherá as colunas
     //com o que foi criado. (ou talvez deixe assim e so chame no Get da pagina, quem sabe)

@@ -9,11 +9,14 @@
 <body>
     <div class="body">
         <div id="Logo">Task Manager</div>
-        <input id="usuario" placeholder="Usuário"/>
+        <input id="usuario" placeholder="Usuário" />
         <input id="senha" placeholder="Senha" />
         <div class="enter">
             <button id="enter-btn"><span>Entrar</span></button>
         </div>
+    </div>
+    <div id="overlay-carregando" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div class="spinner-grande"></div>
     </div>
 </body>
 </html>
