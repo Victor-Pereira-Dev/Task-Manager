@@ -103,3 +103,16 @@
         transform: rotate(360deg);
     }
 }
+
+.mensagem-erro {
+    display: none;
+    background-color: #fdecea;
+    color: #b71c1c;
+    border: 1px solid #f5c6cb;
+    border-left: 4px solid #d32f2f;
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}

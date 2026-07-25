@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Task_Manager.Application.Services;
 using Task_Manager.Application.DTO.Ticket;
 using Task_Manager.Application.Interfaces.Ticket;
+using Task_Manager.Application.Services;
 
 namespace Task_Manager.Controllers
 {
@@ -16,6 +17,7 @@ namespace Task_Manager.Controllers
             _ticketServico = ticketServico;
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult InserirTicket([FromBody] CriarTicketDTO dto)
         {

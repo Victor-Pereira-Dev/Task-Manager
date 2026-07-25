@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Task_Manager.Application.Services;
 using Task_Manager.Application.DTO.Login;
 using Task_Manager.Application.Interfaces.Login;
+using Task_Manager.Application.Services;
 
 namespace Task_Manager.Controllers
 {

@@ -1,4 +1,4 @@
-﻿ const botaoGrid = document.getElementById('grid-btn');
+﻿const botaoGrid = document.getElementById('grid-btn');
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
@@ -57,22 +57,25 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlayProjeto.classList.contains('ativo')) fecharModalProjeto();
 });
 
-//TODO: Quando implementar o back-end, mudar isso daqui
 async function criarProjeto(dadosProjeto) {
-    const response = await fetch('/api/projetos', {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('/Projeto', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dadosProjeto)
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+            teste: dadosProjeto.nome
+        })
     });
 
     if (!response.ok) {
         throw new Error(`Erro ao criar projeto: ${response.status}`);
     }
 
-    return response.json(); // espera-se { id, nome, descricao, status, ... }
+    return response.json(); 
 }
 
-// Monta as iniciais de cada membro (ex: "Victor Pereira" -> "VP")
+
 function gerarAvatares(membrosTexto) {
     if (!membrosTexto) return '';
 

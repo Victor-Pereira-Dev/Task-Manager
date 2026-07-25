@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Task_Manager.Application.Interfaces.Projeto;
 
@@ -19,17 +20,12 @@ namespace Task_Manager.Controllers
             _projetoServico = projetoServico;
         }
 
-        [HttpGet]
-        public IEnumerable<ProjetoDTO> Get()
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CriarProjeto(ProjetoDTO dto)
         {
             _projetoServico.Teste();
-            return Enumerable.Range(1, 5).Select(index => new ProjetoDTO
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return Ok();
         }
     }
 }

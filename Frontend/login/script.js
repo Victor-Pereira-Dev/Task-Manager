@@ -19,19 +19,23 @@ async function Logar(login, senha) {
 }
 
 botao.addEventListener("click", async () => {
-    const login = document.getElementById('usuario').value; 
+    const login = document.getElementById('login').value; 
     const senha = document.getElementById('senha').value; 
 
     overlay.style.display = 'flex';
     botao.disabled = true;
 
     try {
-        const usuario = await Logar(login, senha);
-        console.log('Login efetuado:', usuario);
+        const resultado = await Logar(login, senha);
+        console.log('Login efetuado:', resultado.token);
+        localStorage.setItem('token', resultado.token);
+
         window.location.href = "/index/index.html";
     } catch (erro) {
         console.error(erro);
-        alert("Usuário ou senha inválidos.");
+        const mensagem = document.getElementById("mensagemErro");
+        mensagem.textContent = "Login ou senha inválidos.";
+        mensagem.style.display = "block";
     } finally {
         overlay.style.display = 'none';
         botao.disabled = false;
