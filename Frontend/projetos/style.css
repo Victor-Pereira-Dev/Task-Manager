@@ -342,11 +342,6 @@
     color: gray;
 }
  
-.projeto-membros {
-    display: flex;
-    align-items: center;
-}
- 
 .projeto-avatar {
     width: 22px;
     height: 22px;

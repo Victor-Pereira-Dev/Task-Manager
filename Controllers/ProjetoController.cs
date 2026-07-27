@@ -24,7 +24,7 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarProjeto(ProjetoDTO dto)
         {
-            _projetoServico.Teste();
+            _projetoServico.SalvarProjeto(dto);
             return Ok();
         }
     }

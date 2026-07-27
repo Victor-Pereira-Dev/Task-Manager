@@ -64,15 +64,21 @@ async function criarProjeto(dadosProjeto) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
-            teste: dadosProjeto.nome
+            Nome: dadosProjeto.nome,
+            Descricao: dadosProjeto.descricao,
+            Status: dadosProjeto.status,
+            Usu_id: 0
         })
     });
 
-    if (!response.ok) {
+    if (response.status === 401) {
+        // token inválido ou expirado
+        localStorage.removeItem('token');
+        window.location.href = "/login.html";
+        return;
+    } else if (!response.ok) {
         throw new Error(`Erro ao criar projeto: ${response.status}`);
     }
-
-    return response.json(); 
 }
 
 
@@ -116,9 +122,6 @@ function criarCardProjeto(projeto) {
  
         <div class="projeto-rodape">
             <span>Criado agora</span>
-            <div class="projeto-membros">
-                ${gerarAvatares(projeto.membros)}
-            </div>
         </div>
     `;
 
@@ -136,7 +139,6 @@ formProjeto.addEventListener('submit', async (e) => {
     const nome = document.getElementById('nomeProjeto').value.trim();
     const descricao = document.getElementById('descricaoProjeto').value.trim();
     const status = document.getElementById('statusProjeto').value;
-    const membros = document.getElementById('membrosProjeto').value.trim();
 
     if (!nome) return;
 
@@ -145,8 +147,8 @@ formProjeto.addEventListener('submit', async (e) => {
     btnSubmit.style.opacity = '0.6';
 
     try {
-        const projetoCriado = await criarProjeto({ nome, descricao, status, membros });
-        criarCardProjeto({ nome, descricao, status, membros }); //TODO: APOS TERMINAR DE IMPLEMENTAR O BACK, MUDAR O QUE É PASSADO PARA projetoCriado.
+        await criarProjeto({ nome, descricao, status});
+        criarCardProjeto({ nome, descricao, status }); 
         fecharModalProjeto();
     } catch (erro) {
         console.error(erro);
