@@ -30,7 +30,7 @@ botao.addEventListener("click", async () => {
         console.log('Login efetuado:', resultado.token);
         localStorage.setItem('token', resultado.token);
 
-        window.location.href = "/index/index.html";
+        window.location.href = "/projetos/projetos.html";
     } catch (erro) {
         console.error(erro);
         const mensagem = document.getElementById("mensagemErro");
