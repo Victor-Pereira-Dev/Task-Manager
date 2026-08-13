@@ -547,6 +547,42 @@
     transform: scale(1.05);
 }
 
+.projeto-editar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #94a3b8; 
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.projeto-editar-btn .material-icons-outlined {
+    font-size: 18px;
+}
+
+.projeto-editar-btn:hover {
+    background: #f1f5f9;
+    color: #1e293b; 
+}
+
+.projeto-editar-btn:active {
+    background: #e2e8f0;
+}
+
+.projeto-editar-btn {
+    opacity: 0;
+    transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.projeto-card:hover .projeto-editar-btn {
+    opacity: 1;
+}
+
 .spinner-grande {
     width: 48px;
     height: 48px;

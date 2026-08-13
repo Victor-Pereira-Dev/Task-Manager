@@ -2,7 +2,6 @@
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
-const botaoBoard = document.getElementById('board');
 const botaoProjetos = document.getElementById('projects');
 const overlay = document.getElementById('overlay-carregando');
 
@@ -18,10 +17,6 @@ botaoFechar.addEventListener('click', () => {
 botaoSair.addEventListener('click', () => {
     localStorage.removeItem('token');
     window.location.href = "/login/login.html";
-});
-
-botaoBoard.addEventListener('click', () => {
-    window.location.href = "/index/index.html";
 });
 
 botaoProjetos.addEventListener('click', () => {
@@ -95,14 +90,12 @@ function AtivarOuDesativarCarregamento (escolha) {
         botaoGrid.disabled = true;
         botaoFechar.disabled = true;
         botaoSair.disabled = true;
-        botaoBoard.disabled = true;
         botaoProjetos.disabled = true;
     } else if (escolha == "desativar") { 
         overlay.style.display = 'none';
         botaoGrid.disabled = false;
         botaoFechar.disabled = false;
         botaoSair.disabled = false;
-        botaoBoard.disabled = false;
         botaoProjetos.disabled = false;
     }
 }
@@ -145,6 +138,9 @@ async function carregarProjeto() {
                 <p class="projeto-descricao">${projeto.descricao || ''}</p>
             </div>
             <span class="projeto-status ${projeto.status}">${projeto.status}</span>
+            <button class="projeto-editar-btn" title="Editar projeto">
+                <span class="material-icons-outlined">edit</span>
+            </button>
         </div>
 
         <div class="projeto-barra-fundo">
@@ -175,16 +171,19 @@ async function carregarProjeto() {
 carregarProjeto();
 
 gridProjetos.addEventListener('click', async (e) => {
-
     const card = e.target.closest('.projeto-card');
-
     if (!card) return;
 
     const idProjeto = card.dataset.id;
     const projeto = projetos.find(p => p.pro_Id == idProjeto);
 
-    abrirModalEditar(projeto);
+    const botaoEditar = e.target.closest('.projeto-editar-btn');
+    if (botaoEditar) {
+        abrirModalEditar(projeto);
+        return;
+    }
 
+    window.location.href = `/index/index.html?projeto=${idProjeto}&board=${encodeURIComponent(projeto.nome)}`;
 });
 
 async function criarProjeto(dadosProjeto) {
@@ -300,44 +299,6 @@ async function DeletarProjeto(dadosProjeto) {
 
 }
 
-function criarCardProjeto(projeto) {
-    const card = document.createElement('div');
-    card.className = 'projeto-card';
-    card.dataset.id = projeto.id;
-
-    card.innerHTML = `
-        <div class="projeto-card-topo">
-            <div>
-                <p class="projeto-nome">${projeto.nome}</p>
-                <p class="projeto-descricao">${projeto.descricao || ''}</p>
-            </div>
-            <span class="projeto-status ${projeto.status}">${projeto.status}</span>
-        </div>
- 
-        <div class="projeto-barra-fundo">
-            <div class="projeto-barra-preenchida" style="width: 0%;"></div>
-        </div>
- 
-        <div class="projeto-colunas">
-            <span class="projeto-coluna-pill backlog">0</span>
-            <span class="projeto-coluna-pill development">0</span>
-            <span class="projeto-coluna-pill progress">0</span>
-            <span class="projeto-coluna-pill done">0</span>
-        </div>
- 
-        <div class="projeto-rodape">
-            <span>Criado agora</span>
-        </div>
-    `;
-
-    // Clique no card leva pro board daquele projeto
-    card.addEventListener('click', () => {
-        window.location.href = `board.html?projeto=${projeto.id}`;
-    });
-
-    gridProjetos.appendChild(card);
-}
-
 formProjeto.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -354,7 +315,7 @@ formProjeto.addEventListener('submit', async (e) => {
     try {
         const projetoCriado = await criarProjeto({ nome, descricao, status });
         if (projetoCriado) {
-            criarCardProjeto({ nome, descricao, status });
+            carregarProjeto();
         }      
         fecharModalProjeto();
     } catch (erro) {

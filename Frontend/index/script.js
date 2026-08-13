@@ -2,7 +2,6 @@
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
-const botaoBoard = document.getElementById('board');
 const botaoProjetos = document.getElementById('projects');
 
 //Parte do Grid
@@ -15,12 +14,8 @@ botaoFechar.addEventListener('click', () => {
 });
 
 botaoSair.addEventListener('click', () => {
+    localStorage.removeItem('token');
     window.location.href = "/login/login.html";
-    //TODO: resetar a sessão antes de enviar pra essa tela.
-});
-
-botaoBoard.addEventListener('click', () => {
-    window.location.href = "/index/index.html";
 });
 
 botaoProjetos.addEventListener('click', () => {
@@ -62,6 +57,83 @@ async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, res
         console.error(erro);
     }
 }
+
+//Carregar o board
+async function carregarBoard(proId) {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`/Ticket?pro_id=${proId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 401) {
+            localStorage.removeItem('token');
+            window.location.href = "/login/login.html";
+            return;
+        } else if (!response.ok) {
+            throw new Error(`Erro ao buscar board: ${response.status}`);
+        }
+
+        const tickets = await response.json();
+
+        // limpa as colunas antes de repopular (mantendo o <h1> do título de cada uma)
+        document.querySelectorAll('.kanban > div').forEach(coluna => {
+            coluna.querySelectorAll('.card').forEach(card => card.remove());
+        });
+
+        tickets.forEach(ticket => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.id = ticket.tic_Id; 
+            card.innerHTML = `
+                <div class="card-title">${ticket.titulo}</div>
+                <span class="card-tag">${ticket.tipo}</span>
+                <div class="card-meta">${ticket.prioridade}${ticket.responsavel ? ' • ' + ticket.responsavel : ''}</div>
+            `;
+
+            const colunaEl = document.querySelector(`.${ticket.coluna}`);
+            if (colunaEl) {
+                colunaEl.appendChild(card);
+            } else {
+                console.warn(`Coluna "${ticket.coluna}" não encontrada no DOM para o ticket ${ticket.tic_Id}`);
+            }
+        });
+
+    } catch (erro) {
+        console.error(erro);
+    }
+}
+
+let proIdAtual = null; 
+
+function pegarBoardUrl() {
+    const boardTitulo = document.getElementById('boardTitle');
+    const params = new URLSearchParams(window.location.search);
+
+    const boardName = params.get('board');
+    const proId = params.get('projeto');
+
+    if (boardName) {
+        boardTitulo.textContent = decodeURIComponent(boardName);
+    } else {
+        boardTitulo.textContent = 'Kanban Board';
+    }
+
+    if (!proId) {
+        console.error('pro_id não encontrado na URL.');
+        return;
+    }
+
+    proIdAtual = proId;
+    carregarBoard(proIdAtual);
+}
+
+pegarBoardUrl();
 
 //Parte do Modal
 const overlay = document.getElementById('modalOverlay');
