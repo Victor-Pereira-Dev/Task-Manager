@@ -3,6 +3,7 @@ const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
 const botaoProjetos = document.getElementById('projects');
+const overlay = document.getElementById('overlay-carregando');
 
 //Parte do Grid
 botaoGrid.addEventListener('click', () => {
@@ -22,44 +23,66 @@ botaoProjetos.addEventListener('click', () => {
     window.location.href = "/projetos/projetos.html";
 });
 
+function AtivarOuDesativarCarregamento(escolha) {
+    if (escolha == "ativar") {
+        overlay.style.display = 'flex';
+        botaoGrid.disabled = true;
+        botaoFechar.disabled = true;
+        botaoSair.disabled = true;
+        botaoProjetos.disabled = true;
+    } else if (escolha == "desativar") {
+        overlay.style.display = 'none';
+        botaoGrid.disabled = false;
+        botaoFechar.disabled = false;
+        botaoSair.disabled = false;
+        botaoProjetos.disabled = false;
+    }
+}
+
 //Parte da requisição para criar o card (Será utilizada pelo criar do modal).
-async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, responsavel, usuario) {
+async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, usuario) {
+    AtivarOuDesativarCarregamento("ativar");
     try {
+        const token = localStorage.getItem('token');
+
         const response = await fetch("/Ticket", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                proId: proId,
-                titulo: titulo,
-                descricao: descricao,
-                tipo: tipo,
-                coluna: coluna,
-                prioridade: prioridade,
-                responsavel: responsavel,
-                usuario: usuario
+                Pro_Id: proId,
+                Titulo: titulo,
+                Descricao: descricao,
+                Tipo: tipo,
+                Coluna: coluna,
+                Prioridade: prioridade,
+                Usu_Id: usuario
             })
         });
 
-        if (!response.ok) {
-            const erro = await response.text();
-            console.log(response.status);
-            console.log(erro);
-            throw new Error("Erro ao criar tarefa.");
+        if (response.status === 401) {
+            // token inválido ou expirado
+            localStorage.removeItem('token');
+            window.location.href = "/login/login.html";
+            return;
+        } else if (!response.ok) {
+            throw new Error(`Erro ao criar projeto: ${response.status}`);
         }
 
-        const ticket = await response.json();
-
-        console.log(ticket);
+        return true;
     }
     catch (erro) {
         console.error(erro);
+    } finally {
+        AtivarOuDesativarCarregamento("desativar");
     }
 }
 
 //Carregar o board
 async function carregarBoard(proId) {
+    AtivarOuDesativarCarregamento("ativar");
     try {
         const token = localStorage.getItem('token');
 
@@ -93,7 +116,7 @@ async function carregarBoard(proId) {
             card.innerHTML = `
                 <div class="card-title">${ticket.titulo}</div>
                 <span class="card-tag">${ticket.tipo}</span>
-                <div class="card-meta">${ticket.prioridade}${ticket.responsavel ? ' • ' + ticket.responsavel : ''}</div>
+                <div class="card-meta">${ticket.prioridade}</div>
             `;
 
             const colunaEl = document.querySelector(`.${ticket.coluna}`);
@@ -106,6 +129,8 @@ async function carregarBoard(proId) {
 
     } catch (erro) {
         console.error(erro);
+    } finally {
+        AtivarOuDesativarCarregamento("desativar");
     }
 }
 
@@ -136,19 +161,19 @@ function pegarBoardUrl() {
 pegarBoardUrl();
 
 //Parte do Modal
-const overlay = document.getElementById('modalOverlay');
+const modalOverlay = document.getElementById('modalOverlay');
 const btnAbrir = document.getElementById('criarCard');
 const btnFechar = document.getElementById('modalClose');
 const btnCancel = document.getElementById('btnCancelar');
 const form = document.getElementById('formTicket');
 
 function abrirModal() {
-    overlay.classList.add('ativo');
+    modalOverlay.classList.add('ativo');
     document.getElementById('titulo').focus();
 }
 
 function fecharModal() {
-    overlay.classList.remove('ativo');
+    modalOverlay.classList.remove('ativo');
     form.reset();
 }
 
@@ -156,15 +181,15 @@ btnAbrir.addEventListener('click', abrirModal);
 btnFechar.addEventListener('click', fecharModal);
 btnCancel.addEventListener('click', fecharModal);
 
-overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) fecharModal();
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) fecharModal();
 });
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('ativo')) fecharModal();
+    if (e.key === 'Escape' && modalOverlay.classList.contains('ativo')) fecharModal();
 });
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const titulo = document.getElementById('titulo').value.trim();
@@ -172,23 +197,14 @@ form.addEventListener('submit', (e) => {
     const tipo = document.getElementById('tipo').value;
     const coluna = document.getElementById('coluna').value;
     const prioridade = document.getElementById('prioridade').value;
-    const responsavel = document.getElementById('responsavel').value.trim();
 
-    if (!titulo || !desc || !responsavel) return;
+    if (!titulo || !desc) return;
 
-    //esse cara, irei substituir provavelmente com um session que pegara na sessão o id do projeto e do usuário que tá criando.
-    criarCard("1B86B063-BC48-4D5E-A307-7AC273D40431", titulo, desc, tipo, coluna, prioridade, responsavel, "86F25DDF-9DF7-4795-A88B-D223283C55E4")
+    const cardCriado = await criarCard(proIdAtual, titulo, desc, tipo, coluna, prioridade, 0);
 
-    //estrutura da Card criada apenas para teste por enquanto no front, depois irei implementar o metodo de chamada de volta que trará os dados e preencherá as colunas
-    //com o que foi criado. (ou talvez deixe assim e so chame no Get da pagina, quem sabe)
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-        <div class="card-title">${titulo}</div>
-        <span class="card-tag">${tipo}</span>
-        <div class="card-meta">${prioridade}${responsavel ? ' • ' + responsavel : ''}</div>
-    `;
-
-    document.querySelector('.' + coluna).appendChild(card);
+    if (cardCriado) {
+        carregarBoard(proIdAtual)
+    }
+  
     fecharModal();
 });

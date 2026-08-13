@@ -488,3 +488,18 @@
     color: gray;
     font-size: 11px;
 }
+
+.spinner-grande {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #fff;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
