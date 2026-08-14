@@ -41,7 +41,7 @@ namespace Task_Manager.Controllers
 
         [Authorize]
         [HttpDelete]
-        public async Task<IActionResult> DeletarProjeto(ProjetoDTO dto)
+        public async Task<IActionResult> DeletarProjeto(DeletarProjetoDTO dto)
         {
             _projetoServico.DeletarProjeto(dto);
             return Ok();

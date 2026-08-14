@@ -34,5 +34,21 @@ namespace Task_Manager.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpPatch]
+        public async Task<IActionResult> AtualizarTicket(TicketDTO dto)
+        {
+            _ticketServico.AtualizarTicket(dto);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task<IActionResult> DeletarTicket(DeletarTicketDTO dto)
+        {
+            _ticketServico.DeletarTicket(dto);
+            return Ok();
+        }
     }
 }

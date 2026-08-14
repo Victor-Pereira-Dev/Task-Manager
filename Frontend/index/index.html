@@ -38,16 +38,16 @@
             <button id="criarCard"><span>+ Novo Ticket</span></button>
         </div>
         <div class="kanban">
-            <div class="backlog">
+            <div class="backlog" data-coluna="backlog">
                 <h1>BACKLOG</h1>
             </div>
-            <div class="development">
+            <div class="development" data-coluna="development">
                 <h1>DEVELOPMENT</h1>
             </div>
-            <div class="progress">
+            <div class="progress" data-coluna="progress">
                 <h1>PROGRESS</h1>
             </div>
-            <div class="done">
+            <div class="done" data-coluna="done">
                 <h1>DONE</h1>
             </div>
         </div>
@@ -106,6 +106,62 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlayEditar">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Editar Ticket</h3>
+                <button class="modal-close" id="modalCloseEditar">&times;</button>
+            </div>
+            <form id="formTicketEditar">
+                <div class="modal-body">
+                    <div class="field type-badge">
+                        <label style="margin:0;">Tipo</label>
+                        <select id="tipoEditar">
+                            <option value="tarefa">Tarefa</option>
+                            <option value="bug">Bug</option>
+                            <option value="historia">História</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="titulo">Título *</label>
+                        <input type="text" id="tituloEditar" placeholder="Ex: Ajustar layout do header" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricaoEditar" placeholder="Detalhe o que precisa ser feito..." required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="field">
+                            <label for="coluna">Coluna</label>
+                            <select id="colunaEditar">
+                                <option value="backlog">Backlog</option>
+                                <option value="development">Development</option>
+                                <option value="progress">Progress</option>
+                                <option value="done">Done</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="prioridade">Prioridade</label>
+                            <select id="prioridadeEditar">
+                                <option value="baixa">Baixa</option>
+                                <option value="media" Selected>Média</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnDeletarTicket">Deletar Projeto</button>
+                    <button type="submit" class="btn btn-primary">Salvar Ticket</button>
                 </div>
             </form>
         </div>

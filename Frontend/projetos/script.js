@@ -131,33 +131,38 @@ async function carregarProjeto() {
             card.className = 'projeto-card';
             card.dataset.id = projeto.pro_Id;
 
+            const qtdBacklog = projeto.qtd_Backlog ?? 0;
+            const qtdDevelopment = projeto.qtd_Development ?? 0;
+            const qtdProgress = projeto.qtd_Progress ?? 0;
+            const qtdDone = projeto.qtd_Done ?? 0;
+
             card.innerHTML = `
-        <div class="projeto-card-topo">
-            <div>
-                <p class="projeto-nome">${projeto.nome}</p>
-                <p class="projeto-descricao">${projeto.descricao || ''}</p>
-            </div>
-            <span class="projeto-status ${projeto.status}">${projeto.status}</span>
-            <button class="projeto-editar-btn" title="Editar projeto">
-                <span class="material-icons-outlined">edit</span>
-            </button>
-        </div>
+                <div class="projeto-card-topo">
+                    <div>
+                        <p class="projeto-nome">${projeto.nome}</p>
+                        <p class="projeto-descricao">${projeto.descricao || ''}</p>
+                    </div>
+                    <span class="projeto-status ${projeto.status}">${projeto.status}</span>
+                    <button class="projeto-editar-btn" title="Editar projeto">
+                        <span class="material-icons-outlined">edit</span>
+                    </button>
+                </div>
 
-        <div class="projeto-barra-fundo">
-            <div class="projeto-barra-preenchida" style="width: 0%;"></div>
-        </div>
+                <div class="projeto-barra-fundo">
+                    <div class="projeto-barra-preenchida" style="width: ${projeto.percentualConcluido}%;"></div>
+                </div>
 
-        <div class="projeto-colunas">
-            <span class="projeto-coluna-pill backlog">0</span>
-            <span class="projeto-coluna-pill development">0</span>
-            <span class="projeto-coluna-pill progress">0</span>
-            <span class="projeto-coluna-pill done">0</span>
-        </div>
+                <div class="projeto-colunas">
+                    <span class="projeto-coluna-pill backlog">${qtdBacklog}</span>
+                    <span class="projeto-coluna-pill development">${qtdDevelopment}</span>
+                    <span class="projeto-coluna-pill progress">${qtdProgress}</span>
+                    <span class="projeto-coluna-pill done">${qtdDone}</span>
+                </div>
 
-        <div class="projeto-rodape">
-            <span>Criado em ${new Date(projeto.criado_em).toLocaleDateString()}</span>
-        </div>
-    `;
+                <div class="projeto-rodape">
+                    <span>Criado em ${new Date(projeto.criado_em).toLocaleDateString()}</span>
+                </div>
+            `;
 
             container.appendChild(card);
         })
@@ -198,8 +203,7 @@ async function criarProjeto(dadosProjeto) {
             body: JSON.stringify({
                 Nome: dadosProjeto.nome,
                 Descricao: dadosProjeto.descricao,
-                Status: dadosProjeto.status,
-                Usu_id: 0
+                Status: dadosProjeto.status
             })
         });
 
@@ -236,7 +240,6 @@ async function EditarProjeto(dadosProjeto) {
                 Nome: dadosProjeto.nome,
                 Descricao: dadosProjeto.descricao,
                 Status: dadosProjeto.status,
-                Usu_id: 0,
                 Pro_id: dadosProjeto.idProjetoEmEdicao
             })
         });
@@ -261,7 +264,7 @@ async function EditarProjeto(dadosProjeto) {
 
 }
 
-async function DeletarProjeto(dadosProjeto) {
+async function DeletarProjeto() {
     AtivarOuDesativarCarregamento("ativar");
 
     try {
@@ -271,11 +274,7 @@ async function DeletarProjeto(dadosProjeto) {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
-                Nome: dadosProjeto.nome,
-                Descricao: dadosProjeto.descricao,
-                Status: dadosProjeto.status,
-                Usu_id: 0,
-                Pro_id: dadosProjeto.idProjetoEmEdicao
+                Pro_id: idProjetoEmEdicao
             })
         });
 
@@ -373,8 +372,8 @@ document.getElementById("btnDeletarProjeto").addEventListener("click", async (e)
     btnSubmit.style.opacity = '0.6';
 
     try {
-        const projetoEditado = await DeletarProjeto({ nome, descricao, status, idProjetoEmEdicao });
-        if (projetoEditado) {
+        const projetoDeletado = await DeletarProjeto();
+        if (projetoDeletado) {
             fecharModalEditar();
             carregarProjeto();
         }
