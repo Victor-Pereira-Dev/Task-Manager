@@ -1,4 +1,6 @@
-﻿const botaoGrid = document.getElementById('grid-btn');
+﻿import { apiFetch } from "../API/ApiFetch.js";
+
+const botaoGrid = document.getElementById('grid-btn');
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
@@ -105,19 +107,10 @@ function AtivarOuDesativarCarregamento (escolha) {
 async function carregarProjeto() {
     AtivarOuDesativarCarregamento("ativar");
     try {
-        const token = localStorage.getItem('token');
+        const response = await apiFetch('/Projeto', { method: 'GET' });
 
-        const response = await fetch('/Projeto', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
-        });
-
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao buscar projetos: ${response.status}`);
         }
 
@@ -195,11 +188,8 @@ async function criarProjeto(dadosProjeto) {
     AtivarOuDesativarCarregamento("ativar");
 
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch('/Projeto', {
+        const response = await apiFetch('/Projeto', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
                 Nome: dadosProjeto.nome,
                 Descricao: dadosProjeto.descricao,
@@ -207,12 +197,8 @@ async function criarProjeto(dadosProjeto) {
             })
         });
 
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao criar projeto: ${response.status}`);
         }
 
@@ -231,11 +217,8 @@ async function EditarProjeto(dadosProjeto) {
     AtivarOuDesativarCarregamento("ativar");
 
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch('/Projeto', {
+        const response = await apiFetch('/Projeto', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
                 Nome: dadosProjeto.nome,
                 Descricao: dadosProjeto.descricao,
@@ -244,12 +227,8 @@ async function EditarProjeto(dadosProjeto) {
             })
         });
 
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao criar projeto: ${response.status}`);
         }
 
@@ -268,22 +247,15 @@ async function DeletarProjeto() {
     AtivarOuDesativarCarregamento("ativar");
 
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch('/Projeto', {
+        const response = await apiFetch('/Projeto', {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
                 Pro_id: idProjetoEmEdicao
             })
         });
 
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao criar projeto: ${response.status}`);
         }
 

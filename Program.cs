@@ -3,6 +3,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
+using Task_Manager.API.Middleware;
 using Task_Manager.Application;
 using Task_Manager.Infrastructure.Data;
 
@@ -40,10 +41,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(); // UI em /scalar/v1
+    app.MapScalarApiReference(); 
 }
 
 app.UseAuthentication();
+app.UseMiddleware<RenovarTokenMiddleware>();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseDefaultFiles(new DefaultFilesOptions
@@ -61,8 +63,6 @@ app.UseStaticFiles(new StaticFileOptions
     ),
     RequestPath = ""
 });
-
-app.UseAuthorization();
 
 app.MapControllers();
 

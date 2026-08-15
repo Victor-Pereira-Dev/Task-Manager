@@ -1,4 +1,6 @@
-﻿const botaoGrid = document.getElementById('grid-btn');
+﻿import { apiFetch } from "../API/ApiFetch.js";
+
+const botaoGrid = document.getElementById('grid-btn');
 const botaoFechar = document.getElementById('grid-btn-fechar');
 const grid = document.getElementById('meu-grid');
 const botaoSair = document.getElementById('sair');
@@ -43,14 +45,8 @@ function AtivarOuDesativarCarregamento(escolha) {
 async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, usuario) {
     AtivarOuDesativarCarregamento("ativar");
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch("/Ticket", {
+        const response = await apiFetch("/Ticket", {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
             body: JSON.stringify({
                 Pro_Id: proId,
                 Titulo: titulo,
@@ -62,12 +58,8 @@ async function criarCard(proId, titulo, descricao, tipo, coluna, prioridade, usu
             })
         });
 
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return; 
+        if (!response.ok) {
             throw new Error(`Erro ao criar projeto: ${response.status}`);
         }
 
@@ -87,21 +79,10 @@ let ticketsAtuais = [];
 async function carregarBoard(proId) {
     AtivarOuDesativarCarregamento("ativar");
     try {
-        const token = localStorage.getItem('token');
+        const response = await apiFetch(`/Ticket?pro_id=${proId}`, { method: 'GET' });
 
-        const response = await fetch(`/Ticket?pro_id=${proId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (response.status === 401) {
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao buscar board: ${response.status}`);
         }
 
@@ -302,16 +283,9 @@ formTicketEditar.addEventListener('submit', async (e) => {
 
 async function EditarTicket(dadosTicket) {
     AtivarOuDesativarCarregamento("ativar");
-
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch('/Ticket', {
+        const response = await apiFetch('/Ticket', {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
             body: JSON.stringify({
                 Tic_Id: dadosTicket.idTicketEmEdicao,
                 Pro_Id: proIdAtual,
@@ -323,11 +297,8 @@ async function EditarTicket(dadosTicket) {
             })
         });
 
-        if (response.status === 401) {
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao editar ticket: ${response.status}`);
         }
 
@@ -376,23 +347,16 @@ async function DeletarTicket() {
     AtivarOuDesativarCarregamento("ativar");
 
     try {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch('/Ticket', {
+        const response = await apiFetch('/Ticket', {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
                 Tic_Id: idTicketEmEdicao,
                 Pro_Id: proIdAtual
             })
         });
 
-        if (response.status === 401) {
-            // token inválido ou expirado
-            localStorage.removeItem('token');
-            window.location.href = "/login/login.html";
-            return;
-        } else if (!response.ok) {
+        if (!response) return;
+        if (!response.ok) {
             throw new Error(`Erro ao criar ticket: ${response.status}`);
         }
 
