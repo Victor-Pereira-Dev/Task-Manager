@@ -1,4 +1,20 @@
 <Solution>
+  <Folder Name="/Banco de Dados e Readme/">
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/SCRIPTS/003_INSERT_USUARIO.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/TABELAS/001_TABELAS_TASK.sql" />
+    <File Path="readme.txt" />
+  </Folder>
+  <Folder Name="/Banco de Dados e Readme/002_Procedures/">
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Login/SP_USUARIOS_SelecionarLogin.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Projeto/SP_PROJETOS_DEL.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Projeto/SP_PROJETOS_INS.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Projeto/SP_PROJETOS_SEL.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Projeto/SP_PROJETOS_UPD.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Ticket/SP_TICKETS_DEL.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Ticket/SP_TICKETS_INS.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Ticket/SP_TICKETS_SEL.sql" />
+    <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Ticket/SP_TICKETS_UPD.sql" />
+  </Folder>
   <Project Path="../TaskManager.Infrastructure/Task_Manager.Infrastructure.csproj" Id="8f6be787-d5bd-4b34-b8ca-875efaf5d374" />
   <Project Path="../Task_Manager.Application/Task_Manager.Application.csproj" Id="b730cf80-0668-4355-981d-0cede3afbdfc" />
   <Project Path="Task_Manager.API.csproj" />
