@@ -3,17 +3,33 @@
 <head>
     <meta charset="utf-8" />
     <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/login/style.css">
     <script src="/login/script.js" defer></script>
 </head>
 <body>
-    <div class="body">
-        <div id="Logo">Task Manager</div>
-        <div id="mensagemErro" class="mensagem-erro"></div>
-        <input id="login" placeholder="Email" />
-        <input type="password" id="senha" placeholder="Senha" />
-        <div class="enter">
-            <button id="enter-btn"><span>Entrar</span></button>
+    <div class="login-wrap">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="card">
+            <div class="brand">
+                <div class="brand-mark">TM</div>
+                <h1 id="Logo">Task Manager</h1>
+                <p>Entre com suas credenciais para continuar</p>
+            </div>
+            <div id="mensagemErro" class="mensagem-erro"></div>
+            <div class="field">
+                <label for="login">Email</label>
+                <input id="login" type="email" placeholder="voce@empresa.com" autocomplete="email" />
+            </div>
+            <div class="field">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password" />
+            </div>
+            <div class="enter">
+                <button id="enter-btn"><span>Entrar</span></button>
+            </div>
         </div>
     </div>
     <div id="overlay-carregando" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
@@ -21,4 +37,3 @@
     </div>
 </body>
 </html>
-
