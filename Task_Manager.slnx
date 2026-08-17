@@ -2,7 +2,7 @@
   <Folder Name="/Banco de Dados e Readme/">
     <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/SCRIPTS/003_INSERT_USUARIO.sql" />
     <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/TABELAS/001_TABELAS_TASK.sql" />
-    <File Path="readme.txt" />
+    <File Path="readme.md" />
   </Folder>
   <Folder Name="/Banco de Dados e Readme/002_Procedures/">
     <File Path="../../../OneDrive/Área de Trabalho/BANCO DE DADOS EAS/BANCO DE DADOS TASK MANAGER/002_PROCEDURE/Login/SP_USUARIOS_SelecionarLogin.sql" />
